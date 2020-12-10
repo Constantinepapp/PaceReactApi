@@ -1,1 +1,1 @@
-leadingpace.net  use  test@gmail.com and 123456789 for demo
+leadingpace.net  use email: test@gmail.com and password: 123456789 for demo
