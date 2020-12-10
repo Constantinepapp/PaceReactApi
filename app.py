@@ -826,53 +826,7 @@ def new_password(current_user):
     user.password = hashed_password
     db.session.commit()
     return jsonify({'message':["success","passwork was updated"]})
-
-@app.route("/admin_all",methods=['GET'])
-@token_required
-def admin_all(current_user):
-    data=request.get_json()
-    user=User.query.filter_by(id = current_user.id).first()
-
-    if user.admin:
-        users = User.query.all()
-        data_raw=Activity.query.all()
-        users_list = []
-        
-        for user in users:
-            activities = 0
-            users_dic = {}
-            users_dic['id'] = user.id
-            users_dic['email'] = user.email
-            users_dic['username'] = user.username
-            users_dic['rest_hr'] = user.rest_hr
-            users_dic['admin'] = user.admin
-            users_dic['max_hr'] = user.max_hr
-            users_dic['male'] = user.male
-            users_dic['age'] = user.age
-            users_dic['last_login'] = user.last_login
-            users_dic['number_login'] = user.number_login
-            for activity in data_raw:
-                if activity.user_id == user.id :
-                    activities = activities + 1
-            users_dic['activities'] = activities
-                
-            users_list.append(users_dic)
-
-        return jsonify({"users":users_list})
-    else:
-        return jsonify({'message':["danger","user is not admin"]})
-    
-
-@app.route("/make_admin",methods=['PUT'])
-@token_required
-def make_admin(current_user):
-    data=request.get_json()
-    user=User.query.filter_by(id = current_user.id).first()
-    
-    user.admin = True
-    db.session.commit()    
-    
-    return jsonify({'message':["success","user is admin"]})
+ 
 
 @app.route("/contact",methods=['POST'])
 @token_required
